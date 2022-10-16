@@ -1,0 +1,21 @@
+groups:
+- name: haqq_node_group
+  rules:
+
+  - alert: MemPoolFailure
+    expr: 'rate(tendermint_mempool_failed_txs[10m]) >= 1'
+    for: 1m
+    labels:
+      severity: error
+    annotations:
+      summary: "{{ $labels.instance }} is mem overflow"
+      description: "Alarm tendermint too much failed txs "
+
+  - alert: MemPoolFailure
+    expr: 'rate(tendermint_p2p_peer_receive_bytes_total[10m])'
+    for: 1m
+    labels:
+      severity: error
+    annotations:
+      summary: "{{ $labels.instance }} is mem overflow"
+      description: "Too much peers disconnected"
